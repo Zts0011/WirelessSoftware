@@ -1,0 +1,3 @@
+Use case:
+Person has a $600 balance. He then spends $35 on dinner, $67 on clothes, $400 on rent, $78 on car parts, then $25 on gas. 
+He is then paid $600 for work. 
