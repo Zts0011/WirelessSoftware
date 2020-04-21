@@ -7,10 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "spending.db";
-    public static final String TABLE_NAME = "Spending";
+    public static final String DATABASE_NAME = "History.db";
+    public static final String TABLE_NAME = "History";
     public static final String COL_1 = "ID";
-    public static final String COL_2 = "ITEM";
+    public static final String COL_2 = "CATEGORY";
     public static final String COL_3 = "DATE";
     public static final String COL_4 = "PRICE";
     public DatabaseHelper(Context context){
@@ -19,7 +19,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db){
-        db.execSQL("CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, ITEM varchar(250), DATE varchar(250), PRICE DOUBLE)");
+        db.execSQL("CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, CATEGORY varchar(250), DATE varchar(250), PRICE DOUBLE)");
     }
 
     @Override
@@ -31,7 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean createTransaction(TransactionModel model){
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_2, model.mItem);
+        contentValues.put(COL_2, model.mCat);
         contentValues.put(COL_3, model.mDate);
         contentValues.put(COL_4, model.mPrice);
         long result = db.insert(TABLE_NAME, null, contentValues);
@@ -41,7 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getAllData(){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor result = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        Cursor result = db.rawQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY ID DESC ", null);
         return result;
     }
 

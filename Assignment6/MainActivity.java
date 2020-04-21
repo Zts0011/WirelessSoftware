@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -17,24 +15,8 @@ import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
     DatabaseHelper myDb;
-    TextView balance;
-    EditText editDay;
-    EditText editMonth;
-    EditText editYear;
-    EditText editPrice;
-    EditText editItem;
-    EditText filterDayFrom;
-    EditText filterMonthFrom;
-    EditText filterYearFrom;
-    EditText filterDayTo;
-    EditText filterMonthTo;
-    EditText filterYearTo;
-    EditText filterPriceFrom;
-    EditText filterPriceTo;
-    Button btnAdd;
-    Button btnSub;
-    Button btnFilter;
-    Button btnClearFilter;
+    TextView balance, editDay, editMonth, editYear, editPrice, editCat, filterDayFrom, filterMonthFrom, filterYearFrom, filterDayTo, filterMonthTo, filterYearTo, filterPriceFrom, filterPriceTo;
+    Button btnAdd, btnSub, btnFilter, btnClear;
     TableLayout history;
     DecimalFormat df = new DecimalFormat("0.00");
 
@@ -49,11 +31,11 @@ public class MainActivity extends AppCompatActivity {
         editMonth = findViewById(R.id.editMonth);
         editYear = findViewById(R.id.editYear);
         editPrice = findViewById(R.id.editPrice);
-        editItem = findViewById(R.id.editItem);
+        editCat = findViewById(R.id.editCat);
         btnAdd = findViewById(R.id.btnAdd);
         btnSub = findViewById(R.id.btnSub);
         btnFilter = findViewById(R.id.btnFilter);
-        btnClearFilter = findViewById(R.id.btnClearFilter);
+        btnClear = findViewById(R.id.btnClear);
         filterDayFrom = findViewById(R.id.filterDayFrom);
         filterMonthFrom = findViewById(R.id.filterMonthFrom);
         filterYearFrom = findViewById(R.id.filterYearFrom);
@@ -80,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                         String month = editMonth.getText().toString();
                         String year = editYear.getText().toString();
                         model.mDate =  CreateDate(day, month, year);
-                        model.mItem = editItem.getText().toString();
+                        model.mCat = editCat.getText().toString();
                         model.mPrice = price;
                         boolean result = myDb.createTransaction(model);
                         if (result)
@@ -103,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                         String month = editMonth.getText().toString();
                         String year = editYear.getText().toString();
                         model.mDate =  CreateDate(day, month, year);
-                        model.mItem = editItem.getText().toString();
+                        model.mCat = editCat.getText().toString();
                         model.mPrice = price;
                         boolean result = myDb.createTransaction(model);
                         if (result)
@@ -127,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        StringBuffer buffer = new StringBuffer();
         Double balance = 0.0;
         ClearTable();
         while(result.moveToNext()){
@@ -166,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.this.editMonth.setText("");
         MainActivity.this.editYear.setText("");
         MainActivity.this.editPrice.setText("");
-        MainActivity.this.editItem.setText("");
+        MainActivity.this.editCat.setText("");
         MainActivity.this.filterDayFrom.setText("");
         MainActivity.this.filterMonthFrom.setText("");
         MainActivity.this.filterYearFrom.setText("");
@@ -209,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ClearFilter(){
-        btnClearFilter.setOnClickListener(
+        btnClear.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
